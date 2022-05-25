@@ -1,3 +1,6 @@
+from operator import le
+
+
 def main():
     # 昇順にソートされた配列
     sorted_array = [1, 2, 3, 5, 12, 7890, 12345]
@@ -12,6 +15,17 @@ def serch_index(sorted_array, target_number):
 
     # ここから記述
 
+    left_index = 0
+    right_index = len(sorted_array) - 1
+    while left_index <= right_index:
+        mid_index = (left_index + right_index) // 2
+        if sorted_array[mid_index] == target_number:
+            return mid_index
+        elif sorted_array[mid_index] < target_number:
+            left_index = mid_index + 1
+        elif sorted_array[mid_index] > target_number:
+            right_index = mid_index - 1
+    return -1
 
     # ここまで記述
 
