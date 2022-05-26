@@ -13,8 +13,6 @@ def main():
 def sort(array):
     # 要素が一つの場合はソートの必要がないので、そのまま返却
     if len(array) == 1:
-    #    print(array)
-    #    print("array")
         return array
 
     # 配列の先頭を基準値とする
@@ -22,91 +20,50 @@ def sort(array):
 
     # ここから記述
 
+    # 配列の逆向きのインデックス番号を取得
+    reverse_array_index = list(range(len(array)))[::-1]
+    flag = 0
 
-    pivot_count = 0
-    left = []
-    right = []
-    pivot_index = 0
-    array_index = list(range(len(array)))[::-1]
-    flag=0
-    for i,j in enumerate(array):
-        for index,num in enumerate(reversed(array)):
-            if i+1 == array_index[index]:
+    # 条件を満たす値を左側と右側から探す
+    for left_index, left_num in enumerate(array):
+        for right_index, right_num in enumerate(reversed(array)):
+    
+    # 左側と右側からの探索がぶつかったところで処理を終了するフラグを立てる
+            if left_index + 1 == reverse_array_index[right_index]:
                 flag = 1
                 break
 
-            elif j >= pivot:
-                pivot2 = j
-                pivot2_index = i
-                if num < pivot:
-                    array[pivot2_index], array[array_index[index]], = array[array_index[index]], array[pivot2_index]
+    # 左側からの探索で見つかった値を取得
+            elif left_num >= pivot:
+                left_pivot = left_num
+                left_pivot_index = left_index
+    
+    # 条件を満たした場合は値を入れ替える
+                if right_num < pivot:
+                    array[left_pivot_index], array[reverse_array_index[right_index]], = array[reverse_array_index[right_index]], array[left_pivot_index]
                     break
-            
-            elif num < pivot:
-                array[pivot2_index], array[array_index[index]], = array[array_index[index]], array[pivot2_index]
+
+    # 条件を満たした場合は値を入れ替える        
+            elif right_num < pivot:
+                array[left_pivot_index], array[reverse_array_index[right_index]], = array[reverse_array_index[right_index]], array[left_pivot_index]
                 break
         else:
             continue
-        left = array[:i+1]
-        right = array[i+1:] 
-        pivot_count += 1
+
+    # 左側と右側に分割する
+        left = array[:left_index+1]
+        right = array[left_index+1:] 
+
+    # フラグが立っている場合は処理を終了する
         if flag:
             break
-    #print("left")
-    #print(left, right)
 
+    # 分割した配列について再帰的に処理を行う
     left = sort(left)
     right = sort(right)
 
     return left  + right
-       
-
-
-#    for i,j in enumerate(array):
-#        if j >= pivot:
-#            pivot2 = j
-#            pivot2_index = i
-#            for index,num in enumerate(reversed(array)):
-#                if i+1 == array_index[index]:
-#                    break
-#
-#                elif num < pivot2:
-#                    array[pivot2_index], array[array_index[index]], = array[array_index[index]], array[pivot_index]
-#                    break
-#        else:
-#            left = array[:i]
-#            right = array[array_index[index]:]
-#            pivot_count += 1
-#            continue
-
-#    left = sort(left)
-#    right = sort(right)
-#
-#    return left + right
-#
-#    for index,num in enumerate(reversed(array)):
-#        if num < pivot:
-#            array[pivot_index], array[-index], = array[-index], array[pivot_index]
-#            for i,j in enumerate(array):
-#                if j >= pivot:
-#                    pivot = i
-#                    pivot_index = i
-#                    break
-            
-
-
-#    for num in array:
-#        if num < pivot:
-#            left.append(num)
-#        elif num > pivot:
-#            right.append(num)
-#        else:
-#            pivot_count += 1
-#    left = sort(left)
-#    right = sort(right)
-#
-#    return left + [pivot] * pivot_count + right
-
+ 
     # ここまで記述
 
 if __name__ == '__main__':
