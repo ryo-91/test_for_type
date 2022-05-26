@@ -3,6 +3,7 @@ for num in range(1, 101):
 
     # ここから記述
 
+    #条件に応じてstringに値を追加する
     if num % 15 == 0:
         string += 'Fizzbuss'
     elif num % 3 == 0:
